@@ -2,6 +2,7 @@ let currentWeatherEl = document.querySelector("#current");
 let forecastWeatherEl = document.querySelector("#forecast-cards");
 let userFormEl = document.querySelector("#form-input");
 let cityNameEl = document.querySelector("#city-name");
+let previousSearchEl = document.querySelector("#searches");
 let previousSearches = [];
 
 
@@ -109,7 +110,7 @@ function displayForecast(data) {
   forecastWeatherEl.textContent = "";
   for ( i = 1; i < 6; i++) {
     let forecastCard = document.createElement("div");
-    forecastCard.classList.add("forecastCard")
+    forecastCard.classList = "forecast-card";
     
     // forecast date
     let forecastDate = new Date(data[i].dt * 1000);
@@ -138,6 +139,7 @@ function displayForecast(data) {
     humidityEl.textContent = "Humidity: " + forecastHumidity + " %";
   
 
+    // test shortening if I have time
     forecastCard.appendChild(dateEl);
     forecastCard.appendChild(iconEl);
     forecastCard.appendChild(tempEl);
@@ -149,7 +151,24 @@ function displayForecast(data) {
   }
 };
 
-function saveSearch (searchedCity) {
+function displayPreviouseSearches (searches) {
+  previousSearchEl.textContent = "";
+
+  for ( i = 0; i < searches.length; i++ ) {
+    let searchName = searches[i];
+
+    // create button container
+    let searchButtonEl = document.createElement("button");
+    searchButtonEl.classList = "btn";
+    searchButtonEl.setAttribute("id", searchName);
+    searchButtonEl.textContent = searchName;
+
+    previousSearchEl.appendChild(searchButtonEl);
+    
+  }
+};
+
+function saveSearch () {
   localStorage.setItem("previoussearches", JSON.stringify(previousSearches));
 };
 
@@ -158,6 +177,7 @@ function loadSearches () {
   if (localStorage.getItem("previoussearches")) {
     previousSearches = JSON.parse(localStorage.getItem("previoussearches"));
     console.log(previousSearches);
+    displayPreviouseSearches (previousSearches);
   }
   else {
     previousSearches = [];
@@ -167,11 +187,9 @@ function loadSearches () {
 function formSubmitHandler (event) {
   event.preventDefault();
   // debugger;
-  // get value from city search
-  let enteredCity = cityNameEl.value.trim();
 
-  // moved down here, 
-  let cityName = enteredCity;
+  // get value from city search, replace method found online to remove extra spaces in between words
+  let cityName = cityNameEl.value.replace(/\s+/g, ' ').trim();
   cityName = cityName.toLowerCase()
     .split(' ')
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
@@ -190,6 +208,12 @@ function formSubmitHandler (event) {
   }
 };
 
+function previousSearchHandler (event) {
+  let previousCity = event.target.getAttribute("id");
+  getCityCoords(previousCity);
+}
+
 userFormEl.addEventListener("submit", formSubmitHandler);
+previousSearchEl.addEventListener("click", previousSearchHandler);
 
 loadSearches();
