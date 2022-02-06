@@ -2,6 +2,7 @@ let currentWeatherEl = document.querySelector("#current");
 let forecastWeatherEl = document.querySelector("#forecast-cards");
 let userFormEl = document.querySelector("#form-input");
 let cityNameEl = document.querySelector("#city-name");
+let previousSearches = [];
 
 
 function getCityCoords(cityName) {
@@ -10,7 +11,7 @@ function getCityCoords(cityName) {
   fetch(apiUrl).then(function(response) {
     if (response.ok) {
       response.json().then(function(data) {
-        // console.log(data[0].lat, data[0].lon);
+        console.log(data);
         getCityWeather(data[0].lat, data[0].lon, cityName);
       });
     }
@@ -18,8 +19,10 @@ function getCityCoords(cityName) {
     // else {
     //   alert("Error: City Not Found");
     // }
+  }).catch(function (error) {
+    console.log(error);
   });
-}
+};
 
 function getCityWeather(lat, lon, cityName) {
   let cityApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely&units=imperial&appid=19559b0b8287907b95d6fa90ee3b3663";
@@ -39,6 +42,13 @@ function getCityWeather(lat, lon, cityName) {
 
       displayCurrent(data.current, cityName);
       displayForecast(data.daily);
+      if (previousSearches.includes(cityName)){
+        console.log("already in array")
+      }
+      else {
+        previousSearches.unshift(cityName);
+        saveSearch();
+      }
     })
   });
 };
@@ -46,11 +56,11 @@ function getCityWeather(lat, lon, cityName) {
 function displayCurrent(data, cityName) {
   currentWeatherEl.textContent = "";
 
-  let text = cityName;
-  text = text.toLowerCase()
-    .split(' ')
-    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-    .join(' ');
+  // let text = cityName;
+  // text = text.toLowerCase()
+  //   .split(' ')
+  //   .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+  //   .join(' ');
 
   // console.log(data);
   // get current date
@@ -59,7 +69,7 @@ function displayCurrent(data, cityName) {
 
   // print current title
   let currentTitle = document.createElement("h2");
-  currentTitle.textContent = text + " " + formattedDate; 
+  currentTitle.textContent = cityName + " " + formattedDate; 
   let iconId = data.weather[0].icon;
   let iconEl = document.createElement("img");
   iconEl.src = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
@@ -139,14 +149,40 @@ function displayForecast(data) {
   }
 };
 
+function saveSearch (searchedCity) {
+  localStorage.setItem("previoussearches", JSON.stringify(previousSearches));
+};
+
+function loadSearches () {
+  // local storage check
+  if (localStorage.getItem("previoussearches")) {
+    previousSearches = JSON.parse(localStorage.getItem("previoussearches"));
+    console.log(previousSearches);
+  }
+  else {
+    previousSearches = [];
+  }
+};
+
 function formSubmitHandler (event) {
   event.preventDefault();
-
+  // debugger;
   // get value from city search
-  let cityName = cityNameEl.value.trim();
+  let enteredCity = cityNameEl.value.trim();
 
-  if (cityName) {
+  // moved down here, 
+  let cityName = enteredCity;
+  cityName = cityName.toLowerCase()
+    .split(' ')
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(' ');
+
+  if (cityName) {    
+    // pass new list of 'previous' searches
+    loadSearches();
+
     getCityCoords(cityName);
+
     cityNameEl.value = "";
   }
   else {
@@ -155,3 +191,5 @@ function formSubmitHandler (event) {
 };
 
 userFormEl.addEventListener("submit", formSubmitHandler);
+
+loadSearches();
