@@ -1,5 +1,7 @@
-let currentWeatherEl = document.querySelector("#current")
-let forecastWeatherEl = document.querySelector("#forecast-cards")
+let currentWeatherEl = document.querySelector("#current");
+let forecastWeatherEl = document.querySelector("#forecast-cards");
+let userFormEl = document.querySelector("#form-input");
+let cityNameEl = document.querySelector("#city-name");
 
 
 function getCityCoords(cityName) {
@@ -137,4 +139,19 @@ function displayForecast(data) {
   }
 };
 
-getCityCoords("minneapolis")
+function formSubmitHandler (event) {
+  event.preventDefault();
+
+  // get value from city search
+  let cityName = cityNameEl.value.trim();
+
+  if (cityName) {
+    getCityCoords(cityName);
+    cityNameEl.value = "";
+  }
+  else {
+    alert("Please enter a city name")
+  }
+};
+
+userFormEl.addEventListener("submit", formSubmitHandler);

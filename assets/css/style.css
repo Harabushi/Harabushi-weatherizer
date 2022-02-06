@@ -29,7 +29,7 @@ main {
   flex-wrap: wrap;
 }
 
-.form-input, .previouse-searches, .current, .btn, .form-label {
+.form-input, .previouse-searches, .current, .btn, .form-label, .user-form {
  flex: 0 0 100%;
  display: flex;
  flex-wrap: wrap;
