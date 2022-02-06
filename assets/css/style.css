@@ -36,3 +36,6 @@ main {
  width: 100%;
 }
 
+.current {
+  border: 1px solid black;
+}
