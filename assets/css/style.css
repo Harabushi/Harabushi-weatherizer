@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+header{
+  background-color: blue;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  color: white;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.city-search {
+  flex: 0 0 calc(100% * 3 / 12 - 2%);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.display-weather {
+  flex: 0 0 calc(100% * 9 / 12 - 2%);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-input, .previouse-searches, .current, .btn, .form-label {
+ flex: 0 0 100%;
+ display: flex;
+ flex-wrap: wrap;
+ width: 100%;
+}
+

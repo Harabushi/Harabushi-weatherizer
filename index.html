@@ -4,9 +4,33 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/css/style.css" />
   <title>Harabushi's Weatherizer</title>
 </head>
 <body>
-  
+  <header>
+    <h1>Harabushi's Weatherizer!</h1>
+  </header>
+
+  <main>
+    <div class="city-search">
+      <div class="form-input">
+        <form>
+          <label class="form-label" for="city">
+            <h3>Search for City:</h3>
+          </label>
+          <input type="text" placeholder="City Name" name="city-name" id="city-name" autofocus="true" class="form-input" />
+          <button type="submit" class="btn">Search</button>
+        </form>
+      </div>
+      <div class="previous-searches">previous searches will be here</div>
+    </div>
+    <div class="display-weather">
+      <div class="current">current weather will be here</div>
+      <div class="forecast">forecast will be here</div>
+    </div>
+  </main>
+
+  <script src="./assets/js/script.js"></script>
 </body>
 </html>
