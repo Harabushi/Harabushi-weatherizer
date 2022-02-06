@@ -1,5 +1,5 @@
 let currentWeatherEl = document.querySelector("#current")
-let forecastWeatherEl = document.querySelector("#forecast")
+let forecastWeatherEl = document.querySelector("#forecast-cards")
 
 
 function getCityCoords(cityName) {
@@ -94,7 +94,45 @@ function displayCurrent(data, cityName) {
 
 function displayForecast(data) {
   // console.log(data);
+  forecastWeatherEl.textContent = "";
   for ( i = 1; i < 6; i++) {
+    let forecastCard = document.createElement("div");
+    forecastCard.classList.add("forecastCard")
+    
+    // forecast date
+    let forecastDate = new Date(data[i].dt * 1000);
+    let formattedDate = forecastDate.toLocaleDateString();
+    let dateEl = document.createElement("h4");
+    dateEl.textContent = formattedDate;
+
+    // forecast weather icon
+    let iconId = data[i].weather[0].icon;
+    let iconEl = document.createElement("img");
+    iconEl.src = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
+
+    // forecast temp
+    let forecastTemp = data[i].temp.day;
+    let tempEl = document.createElement("div");
+    tempEl.textContent = "Temp: " + forecastTemp + "\u00B0F";
+
+    // forecast wind
+    let forecastWind= data[i].wind_speed;
+    let windEl = document.createElement("div");
+    windEl.textContent = "Wind: " + forecastWind + " MPH";
+
+    // print current humidity
+    let forecastHumidity = data[i].humidity;
+    let humidityEl = document.createElement("div");
+    humidityEl.textContent = "Humidity: " + forecastHumidity + " %";
+  
+
+    forecastCard.appendChild(dateEl);
+    forecastCard.appendChild(iconEl);
+    forecastCard.appendChild(tempEl);
+    forecastCard.appendChild(windEl);
+    forecastCard.appendChild(humidityEl);
+
+    forecastWeatherEl.appendChild(forecastCard);
 
   }
 };
