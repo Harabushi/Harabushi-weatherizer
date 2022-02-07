@@ -210,6 +210,7 @@ function formSubmitHandler (event) {
 
 function previousSearchHandler (event) {
   let previousCity = event.target.getAttribute("id");
+  loadSearches();
   getCityCoords(previousCity);
 }
 

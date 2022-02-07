@@ -17,25 +17,57 @@ main {
   flex-wrap: wrap;
 }
 
+/* search area stylings */
 .city-search {
   flex: 0 0 calc(100% * 3 / 12 - 2%);
   display: flex;
   flex-wrap: wrap;
 }
 
+.user-form {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn {
+  width: 80%;
+}
+
+button {
+  margin: 5px;
+}
+/* weather stylings */
 .display-weather {
   flex: 0 0 calc(100% * 9 / 12 - 2%);
   display: flex;
   flex-wrap: wrap;
 }
 
-.form-input, .previouse-searches, .current, .btn, .form-label, .user-form {
- flex: 0 0 100%;
- display: flex;
- flex-wrap: wrap;
- width: 100%;
+.current {
+  width: 100%;
+  border: 2px solid black;
+  padding: 10px;
 }
 
-.current {
-  border: 1px solid black;
+.current div {
+  padding: 5px;
+}
+
+.forecast, h3 {
+  width: 100%;
+}
+
+.forecast-cards {
+  justify-content: space-evenly;
+}
+
+/* utility stylings */
+
+.flex {
+  flex: 0 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 }
