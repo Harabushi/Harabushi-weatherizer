@@ -7,7 +7,7 @@ let previousSearches = [];
 
 
 function getCityCoords(cityName) {
-  let apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=19559b0b8287907b95d6fa90ee3b3663";
+  let apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=19559b0b8287907b95d6fa90ee3b3663";
 
   fetch(apiUrl).then(function(response) {
     if (response.ok) {
