@@ -43,12 +43,10 @@ function getCityWeather(lat, lon, cityName) {
 
       displayCurrent(data.current, cityName);
       displayForecast(data.daily);
-      if (previousSearches.includes(cityName)){
-        console.log("already in array")
-      }
-      else {
+      if (!previousSearches.includes(cityName)){
         previousSearches.unshift(cityName);
-        saveSearch();
+        saveSearches();
+        loadSearches();
       }
     })
   });
@@ -68,34 +66,52 @@ function displayCurrent(data, cityName) {
   let today = new Date(data.dt * 1000);
   let formattedDate = today.toLocaleDateString();
 
-  // print current title
-  let currentTitle = document.createElement("h2");
-  currentTitle.textContent = cityName + " " + formattedDate; 
+  // current title
+  let currentTitle = document.createElement("div");
+  currentTitle.classList = "flex";
+
+  // current city and date
+  let cityDate = document.createElement("h2");
+  cityDate.textContent = cityName + " " + formattedDate;
+  currentTitle.appendChild(cityDate);
+  
+  // current weather icon
   let iconId = data.weather[0].icon;
   let iconEl = document.createElement("img");
   iconEl.src = "http://openweathermap.org/img/wn/" + iconId + "@2x.png";
   currentTitle.appendChild(iconEl);
 
-  // print current temp
+  // current temp
   let tempCurrent = data.temp;
   let tempEl = document.createElement("div");
   tempEl.textContent = "Temp: " + tempCurrent + "\u00B0F";
 
-  // print current wind speed
+  // current wind speed
   let windCurrent = data.wind_speed;
   let windEl = document.createElement("div");
   windEl.textContent = "Wind: " + windCurrent + " MPH";
 
-  // print current humidity
+  // current humidity
   let humidityCurrent = data.humidity;
   let humidityEl = document.createElement("div");
   humidityEl.textContent = "Humidity: " + humidityCurrent + " %";
 
-  // print current uvi
+  // current uvi
   let uviCurrent = data.uvi;
   let uviEl = document.createElement("div");
-  uviEl.textContent = "UV Index: " + uviCurrent;
-
+  let uviSpanEl = document.createElement("span");
+  uviEl.textContent = "UV Index: ";
+  uviSpanEl.textContent = uviCurrent;
+  if ( uviCurrent <= 2 ) {
+    uviSpanEl.classList = "bg-safe";    
+  }
+  else if ( uviCurrent <=7 ) {
+    uviSpanEl.classList = "bg-moderate";
+  }
+  else {
+    uviSpanEl.classList = "bg-severe";
+  };
+  uviEl.appendChild(uviSpanEl);
 
   currentWeatherEl.appendChild(currentTitle);
   currentWeatherEl.appendChild(tempEl);
@@ -168,7 +184,7 @@ function displayPreviouseSearches (searches) {
   }
 };
 
-function saveSearch () {
+function saveSearches () {
   localStorage.setItem("previoussearches", JSON.stringify(previousSearches));
 };
 
@@ -177,10 +193,12 @@ function loadSearches () {
   if (localStorage.getItem("previoussearches")) {
     previousSearches = JSON.parse(localStorage.getItem("previoussearches"));
     console.log(previousSearches);
+    getCityCoords(previousSearches[0]);
     displayPreviouseSearches (previousSearches);
   }
   else {
     previousSearches = [];
+    getCityCoords("Minneapolis");
   }
 };
 
@@ -196,11 +214,7 @@ function formSubmitHandler (event) {
     .join(' ');
 
   if (cityName) {    
-    // pass new list of 'previous' searches
-    loadSearches();
-
     getCityCoords(cityName);
-
     cityNameEl.value = "";
   }
   else {

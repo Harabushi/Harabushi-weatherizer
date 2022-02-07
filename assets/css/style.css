@@ -3,25 +3,37 @@
 }
 
 header{
-  background-color: blue;
+  background: linear-gradient(0.25turn, dodgerblue, blue, indigo);
   width: 100%;
   text-align: center;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 h1 {
   color: white;
 }
 
+h1, h2, h3, h4 {
+  margin: 2.5px;
+  padding: 5px;
+  font-size: 2.5rem;
+}
+
 main {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
+
+/* img {
+  background-color: lightslategray;
+} */
 
 /* search area stylings */
 .city-search {
   flex: 0 0 calc(100% * 3 / 12 - 2%);
-  display: flex;
-  flex-wrap: wrap;
+  margin: 0 15px;
 }
 
 .user-form {
@@ -29,38 +41,109 @@ main {
   align-items: center;
   justify-content: center;
   width: 100%;
+  border-bottom: 3.5px solid gray;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-.btn {
-  width: 80%;
+.previous-searches {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
-button {
+.btn, .form-input {
+  width: 100%;
+  font-size: 1.5rem;
   margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
 }
+
+
+.btn:hover {
+  background-color: rgb(90,162,233);
+}
+
+.search-btn {
+  background-color: rgb(90,162,233);
+}
+
+.search-btn:hover {
+  background-color: rgb(42,96,124);
+}
+
 /* weather stylings */
 .display-weather {
   flex: 0 0 calc(100% * 9 / 12 - 2%);
-  display: flex;
   flex-wrap: wrap;
 }
+
 
 .current {
   width: 100%;
   border: 2px solid black;
   padding: 10px;
+  font-size: 2rem;
+  align-items: start;
 }
 
 .current div {
-  padding: 5px;
+  padding: 10px;
 }
 
-.forecast, h3 {
+.forecast {
   width: 100%;
+  font-size: 2rem;
+  text-align: center;
+  align-items: center;
 }
 
 .forecast-cards {
-  justify-content: space-evenly;
+  justify-content: space-between;
+  font-size: 1rem;
+  text-align: center;
+  align-items: center;
+  flex: 100%;
+}
+
+.forecast-cards div {
+  background-color: rgb(51,71,90);
+  color: white;
+  padding: 5px;
+  text-align: start;
+  margin: 7.5px 5px;
+}
+
+.forecast-cards h4 {
+  font-size: 1.5rem;
+  margin: 7.5px 5px;
+}
+
+.forecast-cards img {
+  width: 25%;
+}
+
+.forecast-card {
+  width: 16.66%;
+}
+
+.current span {
+  padding: 5px 15px;
+  color: white;
+  border-radius: 10px;
+}
+
+.bg-safe {
+  background-color: green;
+}
+
+.bg-moderate {
+  background-color: yellow;
+}
+
+.bg-severe {
+  background-color: red;
 }
 
 /* utility stylings */
@@ -70,4 +153,5 @@ button {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  align-items: center;
 }
